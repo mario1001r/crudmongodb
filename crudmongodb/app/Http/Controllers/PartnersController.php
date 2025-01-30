@@ -5,20 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Partner;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PartnersController extends Controller
 {
 
     public function testRegister()
     {
+        $session = DB::getMongoClient()->startSession();
+        $session->startTransaction();
         $user = new User();
-        $user->name = 'Nombre de prueba';
-        $user->email = 'emailprueba3@gmail.com';
+        $user->name = 'Nombre de prueba 1009';
+        $user->email = 'emailprueba1009@gmail.com';
         $user->save();
         $partner = new Partner();
-        $partner->first_name = 'Nombre de prueba';
-        $partner->last_name = 'Apellido de prueba';
+        $partner->first_name = 'Nombre de prueba 2009';
+        $partner->last_name = 'Apellido de prueba 2009';
         $partner->save();
+        $session->commitTransaction();
+        // $session->abortTransaction();
         echo 'Registro exitoso';
     }
     /**
