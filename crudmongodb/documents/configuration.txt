@@ -1,0 +1,22 @@
+Una vez descargado el proyecto
+1. Descargar Librerias de composer:
+composer install o composer update
+
+2. Descargar los temas de bootswatch:
+git submodule init && git submodule update
+
+3. Crear enlace simbólico de la carpeta storage:
+php artisan storage:link 
+
+4. Copiar el contenido del archivo .env.example y
+pegar el contenido en el archivo .env
+para conexión a base de datos
+
+5. Una vez configurado el .env, correr las migraciones:
+php artisan migrate
+
+6. Crear la llave de la aplicación
+php artisan key:generate
+
+7. Correr el servidor de la aplicación:
+php artisan serve
