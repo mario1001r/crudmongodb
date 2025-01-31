@@ -15,12 +15,12 @@ class PartnersController extends Controller
         $session = DB::getMongoClient()->startSession();
         $session->startTransaction();
         $user = new User();
-        $user->name = 'Nombre de prueba 1009';
-        $user->email = 'emailprueba1009@gmail.com';
+        $user->name = fake()->name();
+        $user->email = fake()->email();
         $user->save();
         $partner = new Partner();
-        $partner->first_name = 'Nombre de prueba 2009';
-        $partner->last_name = 'Apellido de prueba 2009';
+        $partner->first_name = fake()->firstName();
+        $partner->last_name = fake()->lastName();
         $partner->save();
         $session->commitTransaction();
         // $session->abortTransaction();
