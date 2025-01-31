@@ -1,11 +1,5 @@
 Una vez descargado el proyecto
 
-Cambiar en la clase Illuminate\Foundation\Auth
-de esto
-use Illuminate\Database\Eloquent\Model;
-a esto
-use MongoDB\Laravel\Eloquent\Model;
-
 1. Descargar Librerias de composer:
 composer install o composer update
 

@@ -1,0 +1,3 @@
+[submodule "crudmongodb/public/bootswatch"]
+	path = crudmongodb/public/bootswatch
+	url = git@github.com:thomaspark/bootswatch.git
