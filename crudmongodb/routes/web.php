@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PartnersController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,7 @@ Route::get('/', function () {
 
 // Test Router register
 Route::get('/testRegister',[PartnersController::class,'testRegister']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

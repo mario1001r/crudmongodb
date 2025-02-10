@@ -1,0 +1,8 @@
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #5bc0de;
+}
+
+.profile_p {
+    font-size:20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
