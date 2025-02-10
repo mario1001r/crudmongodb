@@ -47,6 +47,29 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Idiomas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url('/setLang/es') }}">
+                                        {{--<img src="{{ asset('storage/imgs/backend/countries/flags/165-spain.png') }}"
+                                            width="30%" height="25%" />--}}
+                                        Español
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{{ url('/setLang/en') }}">
+                                        {{---<img src="{{ asset('storage/imgs/backend/countries/flags/067-united-states.png') }}"
+                                            width="30%" height="25%" />--}}
+                                        Inglés
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
