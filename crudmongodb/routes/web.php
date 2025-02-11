@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\ThemesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);
+
+// Ruta de Temas
+Route::get('/setTheme/{theme}', [ThemesController::class, 'setTheme']);
 
 Route::get('/', function () {
     return view('welcome');

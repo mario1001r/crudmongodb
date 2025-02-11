@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <?php 
+    $themes = \App\Models\Theme::get();
     $theme_select = Illuminate\Support\Facades\Session::get('theme') != '' ? Illuminate\Support\Facades\Session::get('theme') : 'cosmo';
 ?>
 <head>
@@ -47,6 +48,21 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Temas
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach ($themes as $theme)
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/setTheme/'.$theme->name) }}">
+                                       {{ucfirst($theme->name)}} 
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
