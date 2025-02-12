@@ -36,13 +36,6 @@ class AuthController extends Controller
 
     public function registerUser(Request $request) 
     {
-        /***
-         *  $validation = Validator::make($request->all(), [
-            'username' => 'required', 'string', 'max:255','unique:users',
-            'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
-            'password' => 'required', 'string', 'min:8', 'confirmed',
-        ]);
-         */
         $session = DB::getMongoClient()->startSession();
         $validation = Validator::make($request->all(), [
             'username' => 'required|string|max:255|unique:users',
