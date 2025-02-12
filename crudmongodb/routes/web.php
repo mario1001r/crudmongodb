@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\ThemesController;
@@ -17,11 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Rutas de Auth
+Route::get('/register-user', [AuthController::class, 'showRegistrationForm'])->name('frontend.register.user');
+Route::post('/register-user', [AuthController::class, 'registerUser'])->name('frontend.register.user_post');
+
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);
 
 // Ruta de Temas
 Route::get('/setTheme/{theme}', [ThemesController::class, 'setTheme']);
+
+// Rutas de Validación de regsitro
+Route::get('/validateEmail/{email}',[AuthController::class,'validateEmail']);
+Route::get('/validateUsername/{username}',[AuthController::class,'validateUsername']);
 
 Route::get('/', function () {
     return view('welcome');
