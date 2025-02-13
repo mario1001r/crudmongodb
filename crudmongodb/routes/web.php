@@ -29,9 +29,6 @@ Route::post('/password/reset/email',[AuthController::class,'sendEmailPasswordRes
 Route::get('/password/reset/{user_id}/{email}',[AuthController::class,'showFormResetPassword']);
 Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
-// '/password/reset/'.$user->_id.'/'.$user->email
-///Route::get('/testEmail/{email}',[AuthController::class,'sendEmailPasswordReset']);
-
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);
 
