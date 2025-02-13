@@ -17,10 +17,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
+
 
 // Rutas de Auth
 Route::get('/register-user', [AuthController::class, 'showRegistrationForm'])->name('frontend.register.user');
 Route::post('/register-user', [AuthController::class, 'registerUser'])->name('frontend.register.user_post');
+Route::get('/password/reset',[AuthController::class,'showPasswordReset']);
+
+Route::get('/testEmail/{email}',[AuthController::class,'sendEmailPasswordReset']);
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);
@@ -28,7 +33,7 @@ Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);
 // Ruta de Temas
 Route::get('/setTheme/{theme}', [ThemesController::class, 'setTheme']);
 
-// Rutas de Validación de regsitro
+// Rutas de Validación de registro
 Route::get('/validateEmail/{email}',[AuthController::class,'validateEmail']);
 Route::get('/validateUsername/{username}',[AuthController::class,'validateUsername']);
 
@@ -38,7 +43,5 @@ Route::get('/', function () {
 
 // Test Router register
 Route::get('/testRegister',[PartnersController::class,'testRegister']);
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

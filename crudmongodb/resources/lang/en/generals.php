@@ -1,5 +1,6 @@
 <?php
 return [
-    'register' => 'Register'
+    'register' => 'Register',
+    'restore_password' => 'Restore Password'
 ];
 ?>

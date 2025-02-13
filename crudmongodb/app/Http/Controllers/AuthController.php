@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordEmail;
 use App\Models\Partner;
 use App\Models\Setting;
 use App\Models\User;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -32,6 +34,24 @@ class AuthController extends Controller
             return response()->json(['result' => true,'message' => 'El usuario ya existen']);
         }
         
+    }
+
+    public function showPasswordReset()
+    {
+        return view('auth.passwords.email');
+    }
+
+    public function sendEmailPasswordReset($email)
+    {
+        $user = User::where('email',$email)->first();
+        if($user != null){
+            $url = url('/password/reset/'.$user->_id.'/'.$user->email);  
+            Mail::to($user->email)
+                ->send(new ResetPasswordEmail($user,$url));
+            /*return view('emails.password_reset',
+            ['user' => $user,'url' => $url]);*/
+        }
+        return redirect('/password/reset')->withInput();
     }
 
     public function registerUser(Request $request) 
