@@ -26,7 +26,7 @@ Route::post('/register-user', [AuthController::class, 'registerUser'])->name('fr
 Route::get('/password/reset',[AuthController::class,'showPasswordReset']);
 Route::post('/password/reset/email',[AuthController::class,'sendEmailPasswordReset']);
 // Show form reset password
-Route::get('/password/reset/{user_id}/{email}',[AuthController::class,'showFormResetPassword']);
+Route::get('/password/reset/{token}/{email}',[AuthController::class,'showFormResetPassword']);
 Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
 // Ruta de Idioma

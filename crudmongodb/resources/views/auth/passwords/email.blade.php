@@ -34,7 +34,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Enviar enlace de Restablecimiento
+                                    <i class="fa-regular fa-paper-plane"></i> Enviar enlace de Restablecimiento
                                 </button>
                             </div>
                         </div>
