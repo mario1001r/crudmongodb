@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -41,17 +42,46 @@ class AuthController extends Controller
         return view('auth.passwords.email');
     }
 
-    public function sendEmailPasswordReset($email)
+    public function sendEmailPasswordReset(Request $request)
     {
-        $user = User::where('email',$email)->first();
+        $user = User::where('email',$request->email)->first();
         if($user != null){
             $url = url('/password/reset/'.$user->_id.'/'.$user->email);  
             Mail::to($user->email)
                 ->send(new ResetPasswordEmail($user,$url));
-            /*return view('emails.password_reset',
-            ['user' => $user,'url' => $url]);*/
         }
         return redirect('/password/reset')->withInput();
+    }
+
+    public function showFormResetPassword($user_id,$email)
+    {
+        $user = User::where('_id',$user_id)->where('email',$email)->first();
+        if($user != null){
+            return view('auth.passwords.reset',['user' => $user]);
+        }
+    }
+
+    public function resetPasswordPost(Request $request)
+    {
+        $session = DB::getMongoClient()->startSession();
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        if ($validation->fails()) {
+            return back()->withErrors($validation)
+                ->withInput();
+        }
+        $user = User::findOrFail($request->_id);
+        if($user != null){
+            $session->startTransaction();
+            $user->password = bcrypt($request->password);
+            $user->save();
+            $session->commitTransaction();
+            Session::flash('message', 'La contraseña de  <b>' . $user->username . '</b> ha sido actualizada correctamente !');
+            return redirect('/login');
+        }
+        return back()->withInput();
     }
 
     public function registerUser(Request $request) 

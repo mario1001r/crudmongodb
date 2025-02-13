@@ -24,8 +24,13 @@ Auth::routes();
 Route::get('/register-user', [AuthController::class, 'showRegistrationForm'])->name('frontend.register.user');
 Route::post('/register-user', [AuthController::class, 'registerUser'])->name('frontend.register.user_post');
 Route::get('/password/reset',[AuthController::class,'showPasswordReset']);
+Route::post('/password/reset/email',[AuthController::class,'sendEmailPasswordReset']);
+// Show form reset password
+Route::get('/password/reset/{user_id}/{email}',[AuthController::class,'showFormResetPassword']);
+Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
-Route::get('/testEmail/{email}',[AuthController::class,'sendEmailPasswordReset']);
+// '/password/reset/'.$user->_id.'/'.$user->email
+///Route::get('/testEmail/{email}',[AuthController::class,'sendEmailPasswordReset']);
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);

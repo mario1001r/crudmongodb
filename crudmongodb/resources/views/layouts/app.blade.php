@@ -124,6 +124,17 @@
         </nav>
 
         <main class="py-4">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    @if (Session::has('message'))
+                        <p class="alert alert-success text-center" id="alert_success" style="font-size:20px;">
+                            {!! Session::get('message') !!}
+                        </p>
+                    @endif
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
             @yield('content')
         </main>
     </div>
