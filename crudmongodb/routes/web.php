@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ThemesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,9 @@ Route::post('/password/reset/email',[AuthController::class,'sendEmailPasswordRes
 // Show form reset password
 Route::get('/password/reset/{token}/{email}',[AuthController::class,'showFormResetPassword']);
 Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
+
+// Routes for the profile user auth
+Route::get('/profile/user',[UserController::class,'profileUser']);
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);

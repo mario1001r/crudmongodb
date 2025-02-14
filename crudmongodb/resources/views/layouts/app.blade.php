@@ -106,6 +106,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{url('/profile/user')}}">
+                                        <i class="fa-solid fa-id-badge"></i> Perfil de {{Auth::user()->partner->first_name}}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -135,7 +138,11 @@
                 </div>
                 <div class="col-lg-3"></div>
             </div>
-            @yield('content')
+            <div class="container">
+                <h5>@yield('title')</h5>
+                <br>
+                @yield('content')
+            </div>
         </main>
     </div>
     <!-- Scripts -->
