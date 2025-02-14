@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
-use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\ThemesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +20,10 @@ Auth::routes();
 
 
 // Rutas de Auth
-Route::get('/register-user', [AuthController::class, 'showRegistrationForm'])->name('frontend.register.user');
-Route::post('/register-user', [AuthController::class, 'registerUser'])->name('frontend.register.user_post');
+Route::get('/login',[AuthController::class,'showLoginForm'])->name('login');
+Route::post('/login',[AuthController::class,'loginFormPost']);
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'registerUserPost']);
 Route::get('/password/reset',[AuthController::class,'showPasswordReset']);
 Route::post('/password/reset/email',[AuthController::class,'sendEmailPasswordReset']);
 // Show form reset password
@@ -43,7 +44,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Test Router register
-Route::get('/testRegister',[PartnersController::class,'testRegister']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

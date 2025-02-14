@@ -12,12 +12,53 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function showRegistrationForm()
+
+    public function showLoginForm()
     {
-        return view('auth.register');
+        return view('auth.login');
+    }
+
+    public function loginFormPost(Request $request)
+    {
+        $request->validate([
+            'login' => 'required',
+            'password' => 'required',
+        ]);
+        $request_login = $request->login;
+        $user = User::where('email',$request_login)
+            ->Orwhere('username',$request_login)->first();
+        if($request->remember == 'on'){
+            $user->remember_token = $request->_token;
+            $user->save();
+        }
+        $credentials = $request->only('password');
+
+        if($user != null){
+            if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+                $credentials['email'] = $request_login;
+            } else {
+                $credentials['username'] = $request_login;
+            }
+            // Intentamos autenticar al usuario
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                return redirect()->intended('home');
+            }
+
+            throw ValidationException::withMessages([
+                'password' => ['Contraseña incorrecta']
+            ]);
+        }else{
+            Session::flash('message','No existen ninguna cuenta asociada con este correo o usuario '.$request_login);
+            return redirect(url('/login'))
+                    ->withErrors(['login' => 'Correo incorrecto',
+                        'password' => 'Contraseña incorrecta']);
+        }
+        
     }
 
     public function validateEmail($email)
@@ -95,7 +136,12 @@ class AuthController extends Controller
         return back()->withInput();
     }
 
-    public function registerUser(Request $request) 
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function registerUserPost(Request $request) 
     {
         $session = DB::getMongoClient()->startSession();
         $validation = Validator::make($request->all(), [
@@ -104,7 +150,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
         if ($validation->fails()) {
-            return redirect('/register-user')->withErrors($validation)
+            return redirect(url('/register'))->withErrors($validation)
                 ->withInput();
         }
         $credentials = $request->only('email','password');

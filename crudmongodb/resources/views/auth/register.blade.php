@@ -8,7 +8,7 @@
                 <div class="card-header" style="text-align:center;">Registro</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ url('/register-user')}}">
+                    <form method="POST" action="{{ url('/register')}}">
                         @csrf
 
                         <div class="row">
