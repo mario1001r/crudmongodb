@@ -1,6 +1,7 @@
 <?php
 return [
     'register' => 'Registrarse',
-    'restore_password' => 'Restablecer Contraseña'
+    'restore_password' => 'Restablecer Contraseña',
+    
 ];
 ?>

@@ -33,6 +33,7 @@ Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
 // Routes for the profile user auth
 Route::get('/profile/user',[UserController::class,'profileUser']);
+Route::get('/profile/user/edit',[UserController::class,'profileUserEdit']);
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);

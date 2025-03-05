@@ -1,15 +1,72 @@
 @extends('layouts.app')
 
 @section('title_page')
-Perfil de usuario
+    @lang('users.user_profile')
+@endsection
+
+@section('buttons')
+    <a href="{{url('/profile/user/edit')}}" class="btn btn-primary">Editar</a>
 @endsection
 
 @section('title')
-Perfil de usuario {{Auth::user()->partner->first_name.' '.Auth::user()->partner->last_name}}
+    {{trans('users.profile_of').' '.$user->partner->first_name.' '.$user->partner->last_name}}
 @endsection
 
 @section('content')
-contenido de la página
+<div class="col-lg-10">
+    <table cellspacing="10" width="100%">
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-solid fa-user-tie"></i> <b>@lang('users.username')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$user->username}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-regular fa-envelope"></i> <b>@lang('users.email')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$user->email}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-regular fa-envelope"></i> <b>@lang('users.sex')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$sex}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-regular fa-envelope"></i> <b>@lang('users.movil')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$user->partner->movil}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-regular fa-envelope"></i> <b>@lang('users.birthday')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$user->partner->birthday}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="20%">
+                <p><i class="fa-regular fa-envelope"></i> <b>@lang('users.address')</b></p>
+            </td>
+            <td width="80%">
+                <p>{{$user->partner->street.' '.$address_number.' ,col: '.$user->partner->colony.' ,CP:'.$user->partner->postal_code}}</p>
+            </td>
+        </tr>
+       
+    </table>
+</div>
+
 @endsection
 
 @section('scripts')

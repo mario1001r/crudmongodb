@@ -139,6 +139,15 @@
                 <div class="col-lg-3"></div>
             </div>
             <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        @yield('buttons')
+                    </div>
+                    <div class="col-lg-3 pull-right">
+                        @yield('delete_button')
+                    </div>
+                </div>
+                <br>
                 <h5>@yield('title')</h5>
                 <br>
                 @yield('content')
