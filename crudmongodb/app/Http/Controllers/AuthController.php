@@ -16,6 +16,12 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public $session;
+
+    public function __construct()
+    {
+        $this->session = DB::getMongoClient()->startSession();
+    }
 
     public function showLoginForm()
     {
@@ -38,7 +44,7 @@ class AuthController extends Controller
         $credentials = $request->only('password');
 
         if($user != null){
-            if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var($request_login, FILTER_VALIDATE_EMAIL)) {
                 $credentials['email'] = $request_login;
             } else {
                 $credentials['username'] = $request_login;
@@ -110,7 +116,6 @@ class AuthController extends Controller
     public function resetPasswordPost(Request $request)
     {
 
-        $session = DB::getMongoClient()->startSession();
         $validation = Validator::make($request->all(), [
             'email' => 'required|string|email|max:100',
             'password' => 'required|string|min:8|confirmed',
@@ -121,10 +126,10 @@ class AuthController extends Controller
         }
         $user = User::findOrFail($request->_id);
         if($user != null){
-            $session->startTransaction();
+            $this->session->startTransaction();
             $user->password = bcrypt($request->password);
             $user->save();
-            $session->commitTransaction();
+            $this->session->commitTransaction();
             $credentials = $request->only('email','password');
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
@@ -143,7 +148,6 @@ class AuthController extends Controller
 
     public function registerUserPost(Request $request) 
     {
-        $session = DB::getMongoClient()->startSession();
         $validation = Validator::make($request->all(), [
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -154,7 +158,7 @@ class AuthController extends Controller
                 ->withInput();
         }
         $credentials = $request->only('email','password');
-        $session->startTransaction();
+        $this->session->startTransaction();
         $user = new User();
         $user->username = $request->username;
         $user->email = $request->email;
@@ -174,7 +178,7 @@ class AuthController extends Controller
         $setting->user_id = $user->_id;
         $setting->theme_id = 2;
         $setting->save();
-        $session->commitTransaction();
+        $this->session->commitTransaction();
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

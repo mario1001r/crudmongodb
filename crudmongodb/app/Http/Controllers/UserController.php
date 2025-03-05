@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public $session;
+
+    public function __construct()
+    {
+        $this->session = DB::getMongoClient()->startSession();
+    }
+
     public function profileUser()
     {
         if(Auth::user() != null){
@@ -31,5 +39,12 @@ class UserController extends Controller
         }else{
             abort(404);
         }
+    }
+
+    public function profileUserPost(Request $request)
+    {
+        dd($request->all);
+        $this->session->startTransaction();
+        $this->session->commitTransaction();
     }
 }
