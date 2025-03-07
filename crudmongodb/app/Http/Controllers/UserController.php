@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Country;
+use App\Models\Partner;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -13,6 +18,12 @@ class UserController extends Controller
     public function __construct()
     {
         $this->session = DB::getMongoClient()->startSession();
+    }
+
+    public function calculateAge($birthday)
+    {
+        $age = Carbon::now()->diffInYears($birthday);
+        return intval($age);
     }
 
     public function profileUser()
@@ -35,7 +46,9 @@ class UserController extends Controller
     {
         if(Auth::user() != null){
             $user = User::find(Auth::user()->_id);
-            return view('user.profile_edit',['user' => $user]);
+            $countries = Country::orderBy('name','ASC')->get();
+            $age = Carbon::now()->diffInYears($user->partner->birthday);
+            return view('user.profile_edit',['user' => $user,'countries' => $countries,'age' => $age]);
         }else{
             abort(404);
         }
@@ -43,8 +56,38 @@ class UserController extends Controller
 
     public function profileUserPost(Request $request)
     {
-        dd($request->all);
-        $this->session->startTransaction();
-        $this->session->commitTransaction();
+        if(Auth::user() != null){
+            $this->session->startTransaction();
+
+            $user = User::find(Auth::user()->_id);
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->save();
+
+            $partner = Partner::where('user_id',$user->_id)->first();
+            $partner->first_name = $request->first_name;
+            $partner->last_name = $request->last_name;
+            $partner->phone_number = $request->phone_number;
+            $partner->movil = $request->movil;
+            $partner->sex = $request->sex;
+            $partner->street = $request->street;
+            $partner->noExt = $request->noExt;
+            $partner->noInt = $request->noInt;
+            $partner->colony = $request->colony;
+            $partner->postal_code = $request->postal_code;
+            $partner->birthday = $request->birthday;
+            $partner->age = intval($request->age_input);
+            $partner->country_id = intval($request->country_select);
+            $partner->state_id = intval($request->state_select);
+            $partner->city_id = intval($request->city_select);
+            $partner->save();
+
+            $this->session->commitTransaction();
+            Session::flash('message','El perfil '.$user->partner->first_name.' se ha actualizado correctamente !');
+            return redirect(url('/profile/user'));
+        }else{
+            abort(404);
+        }
+        
     }
 }
