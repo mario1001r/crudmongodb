@@ -109,6 +109,9 @@
                                     <a class="dropdown-item" href="{{url('/profile/user')}}">
                                         <i class="fa-solid fa-id-badge"></i> Perfil de {{Auth::user()->partner->first_name}}
                                     </a>
+                                    <a class="dropdown-item" href="{{url('/profile/user/password')}}">
+                                         Cambiar Contraseña
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -35,6 +35,8 @@ Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 Route::get('/profile/user',[UserController::class,'profileUser']);
 Route::get('/profile/user/edit',[UserController::class,'profileUserEdit']);
 Route::post('/profile/user/edit',[UserController::class,'profileUserPost']);
+Route::get('/profile/user/password',[UserController::class,'changePasswordForm']);
+Route::post('/profile/user/password',[UserController::class,'changePasswordPost']);
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);

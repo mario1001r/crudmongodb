@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -90,4 +92,46 @@ class UserController extends Controller
         }
         
     }
+
+    public function changePasswordForm()
+    {
+        if(Auth::user() != null){
+            return view('user.update_password');
+        }else{
+            abort(404);
+        }
+        
+    }
+
+    public function changePasswordPost(Request $request)
+    {
+        $user = User::find(Auth::user()->_id);
+        if($user != null){
+            // Hola1020
+            $validation = Validator::make($request->all(), [
+                'current_password' => 'required|string|min:8',
+                'password' => 'required|string|min:8|confirmed',
+                'password_confirmation' => 'required|string|min:8'
+            ]);
+            if ($validation->fails()) {
+                return redirect('/profile/user/password')->withErrors($validation)
+                    ->withInput();
+            }
+            // comparamos la contraseña introducida con la actual de la base de datos
+            $check_old_password = Hash::check($request->current_password, $user->password);
+            if($check_old_password){
+                $user->password = bcrypt($request->password);
+                $user->save();
+                Session::flash('message','Tu contraseña '.$user->partner->first_name.' ha sido actualizada existosamente!');
+                return redirect(url('/home'));
+            }else{
+                return response()->json(['message' => 'Verificación de contraseña incorrecta']);
+            }
+        }else{
+            abort(404);
+        }
+        
+    }
+
+    
 }
