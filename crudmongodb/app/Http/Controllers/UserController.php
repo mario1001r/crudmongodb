@@ -32,35 +32,35 @@ class UserController extends Controller
 
     public function profileUser()
     {
-        if(Auth::user() != null){
+        if (Auth::user() != null) {
             $user = User::find(Auth::user()->_id);
             $sex = '';
             $address_number = '';
-            if($user->partner->sex != ''){
-                $sex = $user->partner->sex == 'male' ? trans('users.male'):trans('users.female');
+            if ($user->partner->sex != '') {
+                $sex = $user->partner->sex == 'male' ? trans('users.male') : trans('users.female');
             }
-            $address_number = $user->partner->noInt == '' ? '#'.$user->partner->noExt:'No.Ext: '.$user->partner->noExt.', #'.$user->partner->noInt;
-            return view('user.profile_account',['user' => $user,'sex' => $sex,'address_number' => $address_number]);
-        }else{
+            $address_number = $user->partner->noInt == '' ? '#' . $user->partner->noExt : 'No.Ext: ' . $user->partner->noExt . ', #' . $user->partner->noInt;
+            return view('user.profile_account', ['user' => $user, 'sex' => $sex, 'address_number' => $address_number]);
+        } else {
             abort(404);
         }
     }
 
     public function profileUserEdit()
     {
-        if(Auth::user() != null){
+        if (Auth::user() != null) {
             $user = User::find(Auth::user()->_id);
-            $countries = Country::orderBy('name','ASC')->get();
+            $countries = Country::orderBy('name', 'ASC')->get();
             $age = Carbon::now()->diffInYears($user->partner->birthday);
-            return view('user.profile_edit',['user' => $user,'countries' => $countries,'age' => $age]);
-        }else{
+            return view('user.profile_edit', ['user' => $user, 'countries' => $countries, 'age' => $age]);
+        } else {
             abort(404);
         }
     }
 
     public function profileUserPost(Request $request)
     {
-        if(Auth::user() != null){
+        if (Auth::user() != null) {
             $this->session->startTransaction();
 
             $user = User::find(Auth::user()->_id);
@@ -68,7 +68,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->save();
 
-            $partner = Partner::where('user_id',$user->_id)->first();
+            $partner = Partner::where('user_id', $user->_id)->first();
             $partner->first_name = $request->first_name;
             $partner->last_name = $request->last_name;
             $partner->phone_number = $request->phone_number;
@@ -87,28 +87,26 @@ class UserController extends Controller
             $partner->save();
 
             $this->session->commitTransaction();
-            Session::flash('message','El perfil '.$user->partner->first_name.' se ha actualizado correctamente !');
+            Session::flash('message', 'El perfil ' . $user->partner->first_name . ' se ha actualizado correctamente !');
             return redirect(url('/profile/user'));
-        }else{
+        } else {
             abort(404);
         }
-        
     }
 
     public function changePasswordForm()
     {
-        if(Auth::user() != null){
+        if (Auth::user() != null) {
             return view('user.update_password');
-        }else{
+        } else {
             abort(404);
         }
-        
     }
 
     public function changePasswordPost(Request $request)
     {
         $user = User::find(Auth::user()->_id);
-        if($user != null){
+        if ($user != null) {
             // Hola1020
             $validation = Validator::make($request->all(), [
                 'current_password' => 'required|string|min:8',
@@ -121,52 +119,41 @@ class UserController extends Controller
             }
             // comparamos la contraseña introducida con la actual de la base de datos
             $check_old_password = Hash::check($request->current_password, $user->password);
-            if($check_old_password){
+            if ($check_old_password) {
                 $user->password = bcrypt($request->password);
                 $user->save();
-                Session::flash('message','Tu contraseña '.$user->partner->first_name.' ha sido actualizada existosamente!');
+                Session::flash('message', 'Tu contraseña ' . $user->partner->first_name . ' ha sido actualizada existosamente!');
                 return redirect(url('/home'));
-            }else{
+            } else {
                 return response()->json(['message' => 'Verificación de contraseña incorrecta']);
             }
-        }else{
+        } else {
             abort(404);
         }
-        
     }
 
     public function settingsForm()
     {
-        if(Auth::user() != null){
-            //dd(Session::get('theme'));
-            $setting = Setting::where('user_id',Auth::user()->_id)->first();
-            $themes = Theme::get(['_id','id','name']);
-            return view('user.settings',['setting' => $setting,'themes' => $themes]);
-        }else{
-            abort(404);
-        }
-        
+
+        $setting = Setting::where('user_id', Auth::user()->_id)->first();
+        $themes = Theme::get(['_id', 'id', 'name']);
+        return view('user.settings', ['setting' => $setting, 'themes' => $themes]);
     }
 
     public function settingsPost(Request $request)
     {
-        if(Auth::user() != null){
-            $setting = Setting::where('user_id',Auth::user()->_id)->first();
-            $this->session->startTransaction();
-            if($request->lang_select != null){
-                $setting->language = $request->lang_select;
-            }
-            if($request->theme_select != null){
-                $setting->theme_id = intval($request->theme_select);
-            }
-            $setting->save();
-            $this->session->commitTransaction();
-            Session::flash('message','Tus preferencias '.Auth::user()->partner->first_name.' se ha actualizado correctamente!');
-            return redirect(url('/profile/user/settings'));
-        }else{
-            return redirect(url('/login'));
-        }
-    }
 
-    
+        $setting = Setting::where('user_id', Auth::user()->_id)->first();
+        $this->session->startTransaction();
+        if ($request->lang_select != null) {
+            $setting->language = $request->lang_select;
+        }
+        if ($request->theme_select != null) {
+            $setting->theme_id = intval($request->theme_select);
+        }
+        $setting->save();
+        $this->session->commitTransaction();
+        Session::flash('message', 'Tus preferencias ' . Auth::user()->partner->first_name . ' se ha actualizado correctamente!');
+        return redirect(url('/profile/user/settings'));
+    }
 }
