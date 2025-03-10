@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,11 +33,16 @@ Route::get('/password/reset/{token}/{email}',[AuthController::class,'showFormRes
 Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
 // Routes for the profile user auth
-Route::get('/profile/user',[UserController::class,'profileUser']);
-Route::get('/profile/user/edit',[UserController::class,'profileUserEdit']);
-Route::post('/profile/user/edit',[UserController::class,'profileUserPost']);
-Route::get('/profile/user/password',[UserController::class,'changePasswordForm']);
-Route::post('/profile/user/password',[UserController::class,'changePasswordPost']);
+Route::group(['middleware' => ['auth']],function(){
+    Route::get('/profile/user',[UserController::class,'profileUser']);
+    Route::get('/profile/user/edit',[UserController::class,'profileUserEdit']);
+    Route::post('/profile/user/edit',[UserController::class,'profileUserPost']);
+    Route::get('/profile/user/password',[UserController::class,'changePasswordForm']);
+    Route::post('/profile/user/password',[UserController::class,'changePasswordPost']);
+    Route::get('/profile/user/settings',[UserController::class,'settingsForm']);
+    Route::post('/profile/user/settings',[UserController::class,'settingsPost']);
+});
+
 
 // Ruta de Idioma
 Route::get('/setLang/{locale}', [LangController::class, 'setLanguage']);

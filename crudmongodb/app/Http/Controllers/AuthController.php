@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ResetPasswordEmail;
 use App\Models\Partner;
 use App\Models\Setting;
+use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,6 +52,12 @@ class AuthController extends Controller
             }
             // Intentamos autenticar al usuario
             if (Auth::attempt($credentials)) {
+                // Buscamos las preferencias de idioma y tema por el usuario id 
+                // Para posteriormente almacenarlas en las variables de sesión correspondientes
+                $setting = Setting::where('user_id',Auth::user()->_id)->first(['language','theme_id']);
+                $theme_session = Theme::where('id',$setting->theme_id)->first(['_id','id','name']);
+                Session::put('theme',$theme_session->name);
+                Session::put('locale',$setting->language);
                 $request->session()->regenerate();
                 return redirect()->intended('home');
             }

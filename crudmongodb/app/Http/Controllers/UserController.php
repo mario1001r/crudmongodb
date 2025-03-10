@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Partner;
+use App\Models\Setting;
+use App\Models\Theme;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -131,6 +133,39 @@ class UserController extends Controller
             abort(404);
         }
         
+    }
+
+    public function settingsForm()
+    {
+        if(Auth::user() != null){
+            //dd(Session::get('theme'));
+            $setting = Setting::where('user_id',Auth::user()->_id)->first();
+            $themes = Theme::get(['_id','id','name']);
+            return view('user.settings',['setting' => $setting,'themes' => $themes]);
+        }else{
+            abort(404);
+        }
+        
+    }
+
+    public function settingsPost(Request $request)
+    {
+        if(Auth::user() != null){
+            $setting = Setting::where('user_id',Auth::user()->_id)->first();
+            $this->session->startTransaction();
+            if($request->lang_select != null){
+                $setting->language = $request->lang_select;
+            }
+            if($request->theme_select != null){
+                $setting->theme_id = intval($request->theme_select);
+            }
+            $setting->save();
+            $this->session->commitTransaction();
+            Session::flash('message','Tus preferencias '.Auth::user()->partner->first_name.' se ha actualizado correctamente!');
+            return redirect(url('/profile/user/settings'));
+        }else{
+            return redirect(url('/login'));
+        }
     }
 
     

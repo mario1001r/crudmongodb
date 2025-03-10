@@ -56,7 +56,7 @@
                             <ul class="dropdown-menu">
                                 @foreach ($themes as $theme)
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/setTheme/'.$theme->name) }}">
+                                    <a class="dropdown-item" href="{{ url('/setTheme/'.$theme->id) }}">
                                        {{ucfirst($theme->name)}} 
                                     </a>
                                 </li>
@@ -112,6 +112,9 @@
                                     <a class="dropdown-item" href="{{url('/profile/user/password')}}">
                                          Cambiar Contraseña
                                     </a>
+                                    <a class="dropdown-item" href="{{url('/profile/user/settings')}}">
+                                        @lang('generals.generals_preferences')
+                                   </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -143,6 +146,9 @@
             </div>
             <div class="container">
                 <div class="row">
+                    <h5>@yield('title')</h5>
+                </div>
+                <div class="row">
                     <div class="col-lg-9">
                         @yield('buttons')
                     </div>
@@ -150,8 +156,6 @@
                         @yield('delete_button')
                     </div>
                 </div>
-                <br>
-                <h5>@yield('title')</h5>
                 <br>
                 @yield('content')
             </div>
