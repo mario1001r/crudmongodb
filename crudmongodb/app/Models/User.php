@@ -54,4 +54,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Partner::class);
     }
+
+    public function setting():HasOne
+    {
+        return $this->hasOne(Setting::class);
+    }
+
+    
 }

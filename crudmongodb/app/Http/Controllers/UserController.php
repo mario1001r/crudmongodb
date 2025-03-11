@@ -134,7 +134,6 @@ class UserController extends Controller
 
     public function settingsForm()
     {
-
         $setting = Setting::where('user_id', Auth::user()->_id)->first();
         $themes = Theme::get(['_id', 'id', 'name']);
         return view('user.settings', ['setting' => $setting, 'themes' => $themes]);

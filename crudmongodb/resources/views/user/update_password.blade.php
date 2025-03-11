@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title_page')
-    Cambiar Contraseña
+    @lang('generals.password_change')
 @endsection
 
 @section('buttons')
@@ -9,8 +9,8 @@
     @csrf
     <div class="row">
         <div class="col-lg-6 mx-auto">
-            <a href="{{url('/home')}}" class="btn btn-danger">Cancelar</a>
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="{{url('/home')}}" class="btn btn-danger"><i class="fa-solid fa-ban"></i> @lang('generals.cancel')</a>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> @lang('generals.save')</button>
         </div>
     </div>
    
@@ -20,7 +20,7 @@
 @endsection
 
 @section('title')
-<p style="text-align:center;">Cambiar Contraseña</p> 
+<p style="text-align:center;">@lang('generals.password_change')</p> 
 @endsection
 
 @section('content')

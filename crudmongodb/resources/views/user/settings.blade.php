@@ -8,9 +8,9 @@
 <form action="{{url('/profile/user/settings')}}" method="POST">
     @csrf
     <div class="row">
-        <div class="col-lg-3 mx-auto">
-            <a href="{{url('/home')}}" class="btn btn-danger">@lang('generals.cancel')</a>
-            <button type="submit" class="btn btn-success">@lang('generals.save')</button>
+        <div class="col-lg-4 mx-auto">
+            <a href="{{url('/home')}}" class="btn btn-danger"><i class="fa-solid fa-ban"></i> @lang('generals.cancel')</a>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> @lang('generals.save')</button>
         </div>
     </div>
 @endsection
@@ -19,7 +19,7 @@
 @endsection
 
 @section('title')
-<p style="text-align:center;">@lang('generals.generals_preferences')</p>
+<p style="text-align:center;" class="text-success">@lang('generals.generals_preferences')</p>
 @endsection
 
 @section('content')
@@ -28,8 +28,12 @@
             <label for="language">@lang('generals.language')</label>
             <br>
             <select id="language" name="language" class="selectpicker">
-                <option value="es"><a href="{{url('/setLang/es')}}">@lang('generals.spanish')</a></option>
-                <option value="en"><a href="{{url('/setLang/en')}}">@lang('generals.english')</a></option>
+                <option value="es" data-subtext="<img src='{{asset('imgs/flags/008-mexico.png')}}' width='25px' height='20px' style='margin-left:10%;'>">
+                    <a href="{{url('/setLang/es')}}">@lang('generals.spanish')</a>
+                </option>
+                <option value="en" data-subtext="<img src='{{asset('imgs/flags/067-united-states.png')}}' width='25px' height='20px' style='margin-left:17%;'>">
+                    <a href="{{url('/setLang/en')}}">@lang('generals.english')</a>
+                </option>
             </select>
         </div>
     </div>

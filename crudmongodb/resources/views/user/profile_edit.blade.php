@@ -86,7 +86,10 @@
             <br>
             <select id="country" name="country" class="selectpicker" data-live-search="true">
                 @foreach ($countries as $country)
-                    <option value="{{$country->id}}">{{ucfirst($country->name)}}</option>
+                    <?php 
+                        $flag = $country->flag != '' ? $country->flag:'default.png';
+                    ?>
+                    <option value="{{$country->id}}" data-subtext="<img src='{{asset('imgs/flags/'.$flag)}}' width='25px' height='20px' style='margin-left:10%;'>">{{ucfirst($country->name)}}</option>
                 @endforeach
             </select>
             <input type="hidden" id="country_select" name="country_select" value="{{$user->partner->country_id}}"/>
@@ -100,7 +103,7 @@
             <input type="hidden" id="state_select" name="state_select" value="{{$user->partner->state_id}}"/>
         </div>
         <div class="col-lg-4">
-            <label for="city">Estado</label>
+            <label for="city">Ciudad</label>
             <br>
             <select id="city" name="city" class="selectpicker" data-live-search="true"></select>
             <input type="hidden" id="city_select" name="city_select" value="{{$user->partner->city_id}}"/>

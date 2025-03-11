@@ -51,7 +51,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Temas
+                                @lang('generals.bootswatch_theme')
                             </a>
                             <ul class="dropdown-menu">
                                 @foreach ($themes as $theme)
@@ -66,22 +66,22 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Idiomas
+                                @lang('generals.languages')
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ url('/setLang/es') }}">
-                                        {{--<img src="{{ asset('storage/imgs/backend/countries/flags/165-spain.png') }}"
-                                            width="30%" height="25%" />--}}
-                                        Español
+                                        <img src="{{ asset('imgs/flags/008-mexico.png') }}"
+                                            width="30%" height="25%" />
+                                        @lang('generals.spanish')
                                     </a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="{{ url('/setLang/en') }}">
-                                        {{---<img src="{{ asset('storage/imgs/backend/countries/flags/067-united-states.png') }}"
-                                            width="30%" height="25%" />--}}
-                                        Inglés
+                                        <img src="{{ asset('imgs/flags/067-united-states.png') }}"
+                                            width="30%" height="25%" />
+                                        @lang('generals.english')
                                     </a>
                                 </li>
                             </ul>
@@ -107,10 +107,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{url('/profile/user')}}">
-                                        <i class="fa-solid fa-id-badge"></i> Perfil de {{Auth::user()->partner->first_name}}
+                                        <i class="fa-solid fa-id-badge"></i> @lang('generals.profile_of') {{Auth::user()->partner->first_name}}
                                     </a>
                                     <a class="dropdown-item" href="{{url('/profile/user/password')}}">
-                                         Cambiar Contraseña
+                                         @lang('generals.password_change')
                                     </a>
                                     <a class="dropdown-item" href="{{url('/profile/user/settings')}}">
                                         @lang('generals.generals_preferences')
@@ -118,7 +118,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <i class="fa-solid fa-right-from-bracket"></i> Salir
+                                        <i class="fa-solid fa-right-from-bracket"></i> @lang('generals.logout')
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

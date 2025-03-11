@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use MongoDB\Laravel\Relations\BelongsTo;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
 
@@ -15,4 +16,9 @@ class Theme extends Model
     protected $collection = 'themes'; 
 
     protected $dates = ['deleted_at'];
+
+    public function setting():BelongsTo
+    {
+        return $this->belongsTo(Setting::class,'theme_id');
+    }
 }
