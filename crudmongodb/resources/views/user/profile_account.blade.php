@@ -5,7 +5,8 @@
 @endsection
 
 @section('buttons')
-    <a href="{{url('/profile/user/edit')}}" class="btn btn-primary">Editar</a>
+<a href="{{url('/home')}}" class="btn btn-info"><i class="fa-solid fa-backward"></i> @lang('generals.go_back')</a>
+    <a href="{{url('/profile/user/edit')}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> @lang('generals.edit')</a>
 @endsection
 
 @section('title')

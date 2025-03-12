@@ -62,7 +62,6 @@ class UserController extends Controller
     {
         if (Auth::user() != null) {
             $this->session->startTransaction();
-
             $user = User::find(Auth::user()->_id);
             $user->username = $request->username;
             $user->email = $request->email;
@@ -71,9 +70,14 @@ class UserController extends Controller
             $partner = Partner::where('user_id', $user->_id)->first();
             $partner->first_name = $request->first_name;
             $partner->last_name = $request->last_name;
+            if($request->phone_code_hidden != null){
+                $partner->phone_code_number = $request->phone_code_hidden;
+            }
             $partner->phone_number = $request->phone_number;
             $partner->movil = $request->movil;
-            $partner->sex = $request->sex;
+            if($request->sex_select != null){
+                $partner->sex = $request->sex_select;
+            }
             $partner->street = $request->street;
             $partner->noExt = $request->noExt;
             $partner->noInt = $request->noInt;

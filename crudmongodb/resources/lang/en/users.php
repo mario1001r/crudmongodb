@@ -11,6 +11,20 @@ return [
     'address' => 'Address',
     'profile_of' => 'Profile of',
     'user_profile' => 'User profile',
+    'phone_number' => 'Phone number',
+    'phone_code' => 'Phone code',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'exterior_number' => 'Exterior number',
+    'interior_number' => 'Interior number',
+    'street' => 'Street',
+    'colony' => 'Colony',
+    'postal_code' => 'Postal code',
+    'birthday' => 'Birthday',
+    'country' => 'Country',
+    'state' => 'State',
+    'city' => 'City',
+    'age' => 'Age',
 
 ];
 ?>
