@@ -72,6 +72,11 @@ class AuthController extends Controller
         
     }
 
+    public function logoutGet()
+    {
+        return redirect()-back()->withInput();
+    }
+
     public function logout(Request $request)
     {
         $request->session()->flush(); // Elimina todas las variables de sesión

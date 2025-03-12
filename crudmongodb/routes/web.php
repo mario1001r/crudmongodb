@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 // Rutas de Auth
 Route::get('/login',[AuthController::class,'showLoginForm'])->name('login');
 Route::post('/login',[AuthController::class,'loginFormPost']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'registerUserPost']);
 Route::get('/password/reset',[AuthController::class,'showPasswordReset']);
@@ -32,6 +31,8 @@ Route::post('/password/reset',[AuthController::class,'resetPasswordPost']);
 
 // Routes for the profile user auth
 Route::group(['middleware' => ['auth']],function(){
+    Route::get('/logout', [AuthController::class, 'logoutGet']); // Validación de error de ruta logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile/user',[UserController::class,'profileUser']);
     Route::get('/profile/user/edit',[UserController::class,'profileUserEdit']);
     Route::post('/profile/user/edit',[UserController::class,'profileUserPost']);
