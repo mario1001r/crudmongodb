@@ -72,6 +72,15 @@ class AuthController extends Controller
         
     }
 
+    public function logout(Request $request)
+    {
+        $request->session()->flush(); // Elimina todas las variables de sesión
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect(url('/'));
+    }
+
     public function validateEmail($email)
     {
         $email_query = User::where('email',$email)->first();
