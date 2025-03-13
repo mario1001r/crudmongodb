@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -68,6 +69,11 @@ class UserController extends Controller
             $user->save();
 
             $partner = Partner::where('user_id', $user->_id)->first();
+            if($request->photo != null){
+                $filename_photo = $user->_id.'_'.$user->username.'_'.rand(100,10000).'.png';
+                $partner->photo = $filename_photo;
+                Storage::disk('users_profile_imgs')->put($filename_photo,file_get_contents($request->photo));
+            }
             $partner->first_name = $request->first_name;
             $partner->last_name = $request->last_name;
             if($request->phone_code_hidden != null){

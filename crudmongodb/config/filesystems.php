@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'users_profile_imgs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/users_profile'),
+            'throw' => false,
+        ],
+
+        // /Users/mario/Pictures/users_profile
+
     ],
 
     /*

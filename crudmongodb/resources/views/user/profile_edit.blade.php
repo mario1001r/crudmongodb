@@ -122,23 +122,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <label for="state">@lang('users.state')</label>
                 <br>
                 <select id="state" name="state" class="selectpicker" data-live-search="true"></select>
                 <input type="hidden" id="state_select" name="state_select" value="{{ $user->partner->state_id }}" />
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <label for="city">@lang('users.city')</label>
                 <br>
                 <select id="city" name="city" class="selectpicker" data-live-search="true"></select>
                 <input type="hidden" id="city_select" name="city_select" value="{{ $user->partner->city_id }}" />
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <label for="age">@lang('users.age')</label>
                 <br>
                 <label id="age"></label>
                 <input type="hidden" id="age_input" name="age_input" value="{{ $user->partner->age }}" />
+            </div>
+            <div class="col-lg-3">
+                <label for="photo">Foto</label>
+                <input type="file" id="photo" name="photo" class="form-control" />
             </div>
         </div>
     </form>

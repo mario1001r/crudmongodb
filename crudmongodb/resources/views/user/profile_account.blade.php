@@ -16,6 +16,16 @@
 @section('content')
 <div class="col-lg-10">
     <table cellspacing="10" width="100%">
+        @if($user->partner->photo != null)
+            <tr>
+                <td valign="top" width="20%">
+                    <p><i class="fa-solid fa-user-tie"></i> <b>Foto</b></p>
+                </td>
+                <td width="80%">
+                   <img src="{{asset('storage/users_profile/'.$user->partner->photo)}}" width="200px" height="300px" />
+                </td>
+            </tr>
+        @endif
         <tr>
             <td valign="top" width="20%">
                 <p><i class="fa-solid fa-user-tie"></i> <b>@lang('users.username')</b></p>
