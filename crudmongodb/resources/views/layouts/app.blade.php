@@ -107,7 +107,12 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{url('/profile/user')}}">
-                                        <i class="fa-solid fa-id-badge"></i> @lang('generals.profile_of') {{Auth::user()->partner->first_name}}
+                                        @if(Auth::user()->partner->photo != '' && Storage::disk('users_profile_imgs')->exists(Auth::user()->partner->photo))
+                                            <img src="{{url('/getImageProfileUser/'.$user->partner->photo)}}" width="20px" height="30px" />
+                                        @else
+                                            <i class="fa-solid fa-id-badge"></i> 
+                                        @endif
+                                        @lang('generals.profile_of') {{Auth::user()->partner->first_name}}
                                     </a>
                                     <a class="dropdown-item" href="{{url('/profile/user/password')}}">
                                          @lang('generals.password_change')

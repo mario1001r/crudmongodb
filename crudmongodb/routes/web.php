@@ -4,8 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +40,9 @@ Route::group(['middleware' => ['auth']],function(){
     Route::post('/profile/user/password',[UserController::class,'changePasswordPost']);
     Route::get('/profile/user/settings',[UserController::class,'settingsForm']);
     Route::post('/profile/user/settings',[UserController::class,'settingsPost']);
+    Route::get('/getImageProfileUser/{image}',[UserController::class,'getImageProfileUser']);
 });
+
 
 
 // Ruta de Idioma

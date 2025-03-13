@@ -58,7 +58,7 @@ return [
 
         'users_profile_imgs' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/users_profile'),
+            'root' => env('PATH_IMG_USERS_PROFILE'),
             'throw' => false,
         ],
 

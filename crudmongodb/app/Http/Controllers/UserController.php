@@ -31,6 +31,12 @@ class UserController extends Controller
         return intval($age);
     }
 
+    public function getImageProfileUser($image)
+    {
+        $path = env('PATH_IMG_USERS_PROFILE').'/'.$image;
+        return response()->file($path);
+    }
+
     public function profileUser()
     {
         if (Auth::user() != null) {
@@ -70,6 +76,9 @@ class UserController extends Controller
 
             $partner = Partner::where('user_id', $user->_id)->first();
             if($request->photo != null){
+                if($partner->photo != '' && Storage::disk('users_profile_imgs')->exists($partner->photo)){
+                    Storage::disk('users_profile_imgs')->delete($partner->photo);
+                }
                 $filename_photo = $user->_id.'_'.$user->username.'_'.rand(100,10000).'.png';
                 $partner->photo = $filename_photo;
                 Storage::disk('users_profile_imgs')->put($filename_photo,file_get_contents($request->photo));
@@ -95,7 +104,6 @@ class UserController extends Controller
             $partner->state_id = intval($request->state_select);
             $partner->city_id = intval($request->city_select);
             $partner->save();
-
             $this->session->commitTransaction();
             Session::flash('message', 'El perfil ' . $user->partner->first_name . ' se ha actualizado correctamente !');
             return redirect(url('/profile/user'));
