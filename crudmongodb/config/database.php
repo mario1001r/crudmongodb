@@ -95,9 +95,10 @@ return [
         ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_URL'),
+            'dsn' => env('DB_CONNECTION').'://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').':'.env('DB_PORT'),
             'database' => env('DB_DATABASE'),
         ],
+        // DB_URL=mongodb://admin:Root123@localhost:27017
         
 
     ],
