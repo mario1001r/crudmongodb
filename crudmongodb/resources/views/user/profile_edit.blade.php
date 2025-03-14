@@ -145,6 +145,22 @@
                 <input type="file" id="photo" name="photo" class="form-control" />
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-4">
+                @if(Auth::user()->partner->photo != '' && Storage::disk('users_profile_imgs')->exists(Auth::user()->partner->photo))
+                    <img src="{{url('/getImageProfileUser/'.Auth::user()->partner->photo)}}" width="150px" height="150px" class="img-circle" />
+                @else
+                    <?php $url_img = '';?>
+                    @if(Auth::user()->partner->sex == 'male')
+                        <?php $url_img = '/getImageProfileUser/avatar_man.png';?>
+                    @else
+                        <?php $url_img = '/getImageProfileUser/avatar_women.png';?>
+                    @endif 
+                    <img src="{{url($url_img)}}" width="150px" height="150px" class="img-circle" />
+                @endif
+            </div>
+        </div>
     </form>
 @endsection
 
@@ -273,7 +289,6 @@
             }, function(cities, status) {
                 if (status = 'success') {
                     if (cities == 'no_data') {
-                        //console.log('No hay ciudades');
                         $('#city').find('option').remove();
                         $('#city').selectpicker('refresh');
                     } else {

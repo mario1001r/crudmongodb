@@ -22,7 +22,22 @@
                     <p><i class="fa-solid fa-user-tie"></i> <b>Foto</b></p>
                 </td>
                 <td width="80%">
-                   <img src="{{url('/getImageProfileUser/'.$user->partner->photo)}}" width="200px" height="300px" />
+                   <img src="{{url('/getImageProfileUser/'.$user->partner->photo)}}" width="150px" height="150px" class="img-circle" />
+                </td>
+            </tr>
+        @else
+            <?php $url_img = '';?>
+            @if(Auth::user()->partner->sex == 'male')
+                <?php $url_img = '/getImageProfileUser/avatar_man.png';?>
+            @else
+                <?php $url_img = '/getImageProfileUser/avatar_women.png';?>
+            @endif 
+            <tr>
+                <td valign="top" width="20%">
+                    <p><i class="fa-solid fa-user-tie"></i> <b>Foto</b></p>
+                </td>
+                <td width="80%">
+                    <img src="{{url($url_img)}}" width="150px" height="150px" class="img-circle" />
                 </td>
             </tr>
         @endif

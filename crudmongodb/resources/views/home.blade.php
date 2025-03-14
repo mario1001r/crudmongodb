@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-<?php
-$themes = \App\Models\Theme::get();
-?>
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

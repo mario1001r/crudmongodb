@@ -108,9 +108,15 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{url('/profile/user')}}">
                                         @if(Auth::user()->partner->photo != '' && Storage::disk('users_profile_imgs')->exists(Auth::user()->partner->photo))
-                                            <img src="{{url('/getImageProfileUser/'.$user->partner->photo)}}" width="20px" height="30px" />
+                                            <img src="{{url('/getImageProfileUser/'.Auth::user()->partner->photo)}}" width="20px" height="20px" class="img-circle" />
                                         @else
-                                            <i class="fa-solid fa-id-badge"></i> 
+                                            <?php $url_img = '';?>
+                                            @if(Auth::user()->partner->sex == 'male')
+                                                <?php $url_img = '/getImageProfileUser/avatar_man.png';?>
+                                            @else
+                                                <?php $url_img = '/getImageProfileUser/avatar_women.png';?>
+                                            @endif 
+                                            <img src="{{url($url_img)}}" width="20px" height="20px" class="img-circle" />
                                         @endif
                                         @lang('generals.profile_of') {{Auth::user()->partner->first_name}}
                                     </a>
