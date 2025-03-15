@@ -15,4 +15,5 @@ class Country extends Model
 	protected $connection = 'mongodb';
 
     protected $collection = 'countries'; 
+
 }
