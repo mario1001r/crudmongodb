@@ -19,6 +19,6 @@ class ThemesController extends Controller
         }else{
             Session::put('theme','cerulean');
         }
-        return back()->withInput();
+        return back();
     }
 }

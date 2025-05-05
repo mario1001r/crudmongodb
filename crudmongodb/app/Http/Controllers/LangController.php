@@ -13,6 +13,6 @@ class LangController extends Controller
         }else{
             Session::put('locale','es');
         }
-        return back()->withInput();
+        return back();
     }
 }

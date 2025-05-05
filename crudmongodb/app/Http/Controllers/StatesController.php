@@ -16,4 +16,10 @@ class StatesController extends Controller
         $result = $states != '[]' ? $states : 'no_data';
         return $result;
     }
+
+    public function index()
+    {
+        return view();
+    }
+    
 }
