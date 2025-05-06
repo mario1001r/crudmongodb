@@ -17,7 +17,7 @@ abstract class IsType {
     public function handle($request, Closure $next)
     {
         if($this->auth->user()->type != $this->getType()){
-            return back()->withInput();
+            return redirect(url('/home'));
         }
         return $next($request);
     }

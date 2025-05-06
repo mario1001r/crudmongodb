@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ThemesController;
@@ -41,6 +42,13 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/profile/user/settings',[UserController::class,'settingsForm']);
     Route::post('/profile/user/settings',[UserController::class,'settingsPost']);
     Route::get('/getImageProfileUser/{image}',[UserController::class,'getImageProfileUser']);
+});
+
+// Routes for countries catalog
+
+Route::group(['middleware' => ['auth','is_admin']],function(){
+    Route::get('/admin/countries',[CountriesController::class,'index']);
+
 });
 
 
