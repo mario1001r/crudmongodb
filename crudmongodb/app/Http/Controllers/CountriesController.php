@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Country;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class CountriesController extends Controller
 {
@@ -17,11 +18,23 @@ class CountriesController extends Controller
         $this->session = DB::getMongoClient()->startSession();
     }
 
+    public function getCountryImageVoid()
+    {
+        return response()->file('/Volumes/DATOS/Projects/laravel/crudmongodb/crudmongodb/public/imgs/flags/default.png');
+    }
+
+    public function getCountryImage($image)
+    {
+        $path = '/Volumes/DATOS/Projects/laravel/crudmongodb/crudmongodb/public/imgs/flags/'.$image;
+        $image = Storage::disk('countries_flags')->exists($image) == true  ? $path:'/Volumes/DATOS/Projects/laravel/crudmongodb/crudmongodb/public/imgs/flags/default.png';
+        return response()->file($image);  
+    }
+
     public function index()
     {
         
-        $countries = Country::paginate(20);
-        dd($countries);
+        $countries = Country::limit(11)->get();
+        return view('backend.countries.index',['countries' => $countries]);
     }
 
     /**
@@ -29,7 +42,7 @@ class CountriesController extends Controller
      */
     public function create()
     {
-        return view();
+        return view('backend.countries.create');
     }
 
     /**
@@ -44,7 +57,7 @@ class CountriesController extends Controller
         $country->abbreviation = $request->abbreviation;
         $country->name = $request->name;
         $country->phone_code = $request->phone_code;
-        $country->flag = '';
+        $country->flag = 'default.png';
         $country->save();
         $this->session->commitTransaction();
         Session::flash('message','El país '.$country->name.' se ha registrado éxitosamente !');

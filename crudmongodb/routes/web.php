@@ -47,8 +47,10 @@ Route::group(['middleware' => ['auth']],function(){
 // Routes for countries catalog
 
 Route::group(['middleware' => ['auth','is_admin']],function(){
+    Route::get('/admin/countries/getImage',[CountriesController::class,'getCountryImageVoid']);
+    Route::get('/admin/countries/getImage/{image}',[CountriesController::class,'getCountryImage']);
     Route::get('/admin/countries',[CountriesController::class,'index']);
-
+    Route::get('/admin/countries/create',[CountriesController::class,'create']);
 });
 
 

@@ -62,6 +62,12 @@ return [
             'throw' => false,
         ],
 
+        'countries_flags' => [
+            'driver' => 'local',
+            'root' => '/Volumes/DATOS/Projects/laravel/crudmongodb/crudmongodb/public/imgs/flags',
+            'throw' => false,
+        ],
+
         // /Users/mario/Pictures/users_profile
 
     ],

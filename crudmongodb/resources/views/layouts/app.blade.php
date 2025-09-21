@@ -25,7 +25,7 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
-
+    @yield('styles')
     <!-- Scripts -->
     {{--@vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 </head>
@@ -43,7 +43,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Catalogos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url('/admin/countries') }}">
+                                        Países
+                                    </a>
+                                </li>
+                                <li>
+                            </ul>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -147,6 +159,7 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
+                    <p id="alert_success2" class="alert alert-success text-center" id="alert_success" style="font-size:20px;display:none;"></p>
                     @if (Session::has('message'))
                         <p class="alert alert-success text-center" id="alert_success" style="font-size:20px;">
                             {!! Session::get('message') !!}
